@@ -45,11 +45,13 @@ class MainActivity : AppCompatActivity() {
         val tableRowTitles = TableRow(this)
         for (title in titles) {
             val textView = TextView(this)
-            textView.textSize = 16f
+            textView.textSize = 25f
             textView.text = title
             textView.setTextColor(Color.WHITE)
             textView.gravity = Gravity.CENTER
             textView.width = windowManager.defaultDisplay.width / 3
+            textView.maxWidth = windowManager.defaultDisplay.width / 3
+            textView.minWidth = windowManager.defaultDisplay.width / 3
             tableRowTitles.addView(textView)
         }
         tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"))
