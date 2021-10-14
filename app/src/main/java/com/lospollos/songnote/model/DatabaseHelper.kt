@@ -1,4 +1,4 @@
-package com.lospollos.songnote.database
+package com.lospollos.songnote.model
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
