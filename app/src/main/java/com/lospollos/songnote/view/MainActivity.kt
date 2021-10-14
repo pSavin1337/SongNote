@@ -13,7 +13,6 @@ import android.graphics.Color
 
 import android.widget.TableLayout
 import android.widget.TableRow
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.lospollos.songnote.model.SongsModel
 import com.lospollos.songnote.viewModel.AddSongFactory
@@ -22,25 +21,26 @@ import com.lospollos.songnote.viewModel.SongsViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var songsViewModel: SongsViewModel
+    private lateinit var songsViewModel: SongsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         songsViewModel = ViewModelProvider(this, AddSongFactory(application,
-            SongsModel("", "", "", false)))
+            SongsModel(0, "", "", "")))
             .get(SongsViewModel::class.java)
+        songsViewModel.operation(0)
 
-        songsViewModel.liveData.observe(this, Observer {
-            fillTable(listOf<String>("Название", "Автор", "Ссылка"),
+        songsViewModel.liveData.observe(this, {
+            fillTable(listOf("Название", "Автор", "Ссылка"),
                 it)
         })
 
     }
 
 
-    fun fillTable(titles: List<String>, songs: List<SongsModel>) {
+    private fun fillTable(titles: List<String>, songs: List<SongsModel>) {
         val tableLayout = findViewById<TableLayout>(R.id.tableLayoutSongs)
         val tableRowTitles = TableRow(this)
         for (title in titles) {
@@ -78,15 +78,17 @@ class MainActivity : AppCompatActivity() {
             tableRow.addView(textViewAuthor)
             tableRow.addView(textViewLink)
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"))
-            tableRow.setOnClickListener(View.OnClickListener {
-                val selectedRow = tableRow
+            tableLayout.addView(tableRow)
+            tableRow.setOnClickListener {
                 for (i in 0 until tableLayout.childCount) {
                     val view = tableLayout.getChildAt(i)
                     (view as? TableRow)?.setBackgroundColor(Color.parseColor("#FF6200EE"))
                 }
                 tableRow.setBackgroundColor(Color.parseColor("#FF6200FF"))
-            })
-            tableLayout.addView(tableRow)
+                val intent = Intent(this, DeleteUpdateSongActivity::class.java)
+                intent.putExtra("idCurrentSong", song.id)
+                startActivity(intent)
+            }
         }
     }
 

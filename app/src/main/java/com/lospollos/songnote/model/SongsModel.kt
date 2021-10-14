@@ -1,5 +1,3 @@
 package com.lospollos.songnote.model
 
-class SongsModel(var name: String, var author: String, var link: String, var toAdd: Boolean) {
-
-}
+class SongsModel(var id : Int, var name: String, var author: String, var link: String)

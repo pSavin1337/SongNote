@@ -5,4 +5,7 @@
     <string name="song_author">Автор</string>
     <string name="song_link">Ссылка на аккорды</string>
     <string name="submit_button">Подтвердить</string>
+    <string name="back">Назад</string>
+    <string name="updateSongButton">Обновить</string>
+    <string name="deleteSongButton">Удалить</string>
 </resources>

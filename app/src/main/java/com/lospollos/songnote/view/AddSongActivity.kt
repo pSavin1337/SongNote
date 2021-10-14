@@ -24,13 +24,14 @@ class AddSongActivity : AppCompatActivity() {
         val authorForm = findViewById<EditText>(R.id.authorForm)
         val linkForm = findViewById<EditText>(R.id.linkForm)
 
-        val songsModel = SongsModel(nameForm.text.toString(),
+        val songsModel = SongsModel(0,
+            nameForm.text.toString(),
             authorForm.text.toString(),
-            linkForm.text.toString(),
-            true
+            linkForm.text.toString()
         )
         val songsViewModel = ViewModelProvider(this, AddSongFactory(application, songsModel))
             .get(SongsViewModel::class.java)
+        songsViewModel.operation(1)
 
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)

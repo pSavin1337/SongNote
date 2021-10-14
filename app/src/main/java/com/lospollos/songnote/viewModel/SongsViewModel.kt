@@ -9,13 +9,16 @@ import com.lospollos.songnote.model.SongsStorage
 class SongsViewModel(application: Application, var songsModel: SongsModel) : AndroidViewModel(application) {
 
     val liveData = MutableLiveData<List<SongsModel>>()
-    val songsStorage = SongsStorage(application)
+    private val songsStorage = SongsStorage(application)
 
-    init {
-        if(songsModel.toAdd)
-            insert()
-        else
-            getSongs()
+    fun operation(operation : Int) {
+        when(operation) {
+            0 -> getSongs()
+            1 -> insert()
+            2 -> delete()
+            3 -> update()
+            4 -> getSongForForm()
+        }
     }
 
     private fun getSongs() {
@@ -24,6 +27,18 @@ class SongsViewModel(application: Application, var songsModel: SongsModel) : And
 
     private fun insert() {
         songsStorage.addSong(songsModel)
+    }
+
+    private fun getSongForForm() {
+        liveData.value = songsStorage.getSongById(songsModel.id)
+    }
+
+    private fun update() {
+        songsStorage.updateSong(songsModel.id, songsModel)
+    }
+
+    private fun delete() {
+        songsStorage.deleteSong(songsModel.id)
     }
 
 }

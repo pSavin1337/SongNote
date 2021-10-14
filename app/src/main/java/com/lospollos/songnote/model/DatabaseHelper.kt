@@ -17,12 +17,12 @@ class DatabaseHelper(context: Context?) :
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS " + DATABASE_NAME)
+        db.execSQL("DROP TABLE IF EXISTS $DATABASE_NAME")
         onCreate(db)
     }
 
     companion object {
-        private val DATABASE_NAME = "songs.db" // название бд
-        private val DATABASE_VERSION = 1 // версия базы данных
+        private const val DATABASE_NAME = "songs.db" // название бд
+        private const val DATABASE_VERSION = 1 // версия базы данных
     }
 }

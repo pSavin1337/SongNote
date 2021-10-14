@@ -36,25 +36,46 @@ class SongsStorage(context: Context) {
             }
             do {
                 val songsModel = SongsModel(
+                    cursor.getInt(cursor.getColumnIndex("id")),
                     cursor.getString(cursor.getColumnIndex("name")),
                     cursor.getString(cursor.getColumnIndex("author")),
-                    cursor.getString(cursor.getColumnIndex("link")),
-                    false
+                    cursor.getString(cursor.getColumnIndex("link"))
                 )
                 list.add(songsModel)
                 cursor.moveToNext()
             } while (!cursor.isAfterLast)
+            cursor.close()
             return list
        // }
+        //return list
+    }
+
+    @SuppressLint("Range")
+    fun getSongById(id : Int) : List<SongsModel> {
+        //val list = CoroutineScope(Dispatchers.IO).async {
+        val cursor = db.query(TABLE_NAME, null, "id = $id", null, null, null, null)
+
+        val list: MutableList<SongsModel> = ArrayList()
+        cursor.moveToFirst()
+        val songsModel = SongsModel(
+            cursor.getInt(cursor.getColumnIndex("id")),
+            cursor.getString(cursor.getColumnIndex("name")),
+            cursor.getString(cursor.getColumnIndex("author")),
+            cursor.getString(cursor.getColumnIndex("link"))
+        )
+        list.add(songsModel)
+        cursor.close()
+        return list
+        // }
         //return list
     }
 
     fun addSong(songsModel: SongsModel) {
         CoroutineScope(Dispatchers.IO).async {
             val contentValues = ContentValues()
-            contentValues.put("name", songsModel.name);
-            contentValues.put("author", songsModel.author);
-            contentValues.put("link", songsModel.link);
+            contentValues.put("name", songsModel.name)
+            contentValues.put("author", songsModel.author)
+            contentValues.put("link", songsModel.link)
             db.insert(TABLE_NAME, null, contentValues)
         }
     }
@@ -62,9 +83,9 @@ class SongsStorage(context: Context) {
     fun updateSong(id: Int, newSongsModel: SongsModel) {
         CoroutineScope(Dispatchers.IO).async {
             val contentValues = ContentValues()
-            contentValues.put("name", newSongsModel.name);
-            contentValues.put("author", newSongsModel.author);
-            contentValues.put("link", newSongsModel.link);
+            contentValues.put("name", newSongsModel.name)
+            contentValues.put("author", newSongsModel.author)
+            contentValues.put("link", newSongsModel.link)
             val where = "id = $id"
             db.update(TABLE_NAME, contentValues, where, null)
         }
@@ -78,7 +99,7 @@ class SongsStorage(context: Context) {
     }
 
     companion object {
-        private val TABLE_NAME = "songs" // название бд
+        private const val TABLE_NAME = "songs" // название бд
     }
 
 }
