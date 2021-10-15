@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DatabaseHelper(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "CREATE TABLE IF NOT EXISTS songs (\n" +

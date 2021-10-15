@@ -5,6 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.lospollos.songnote.model.SongsModel
 import com.lospollos.songnote.model.SongsStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 
 class SongsViewModel(application: Application, var songsModel: SongsModel) : AndroidViewModel(application) {
 

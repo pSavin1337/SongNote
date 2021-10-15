@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     private fun fillTable(titles: List<String>, songs: List<SongsModel>) {
         val tableLayout = findViewById<TableLayout>(R.id.tableLayoutSongs)
         val tableRowTitles = TableRow(this)

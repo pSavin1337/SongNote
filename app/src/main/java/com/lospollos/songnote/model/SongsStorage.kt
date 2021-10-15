@@ -27,32 +27,28 @@ class SongsStorage(context: Context) {
 
     @SuppressLint("Range")
     fun getSongs() : List<SongsModel> {
-        //val list = CoroutineScope(Dispatchers.IO).async {
-            val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
+        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
 
-            val list: MutableList<SongsModel> = ArrayList()
-            if (!cursor.moveToFirst()) {
-                return list
-            }
-            do {
-                val songsModel = SongsModel(
-                    cursor.getInt(cursor.getColumnIndex("id")),
-                    cursor.getString(cursor.getColumnIndex("name")),
-                    cursor.getString(cursor.getColumnIndex("author")),
-                    cursor.getString(cursor.getColumnIndex("link"))
-                )
-                list.add(songsModel)
-                cursor.moveToNext()
-            } while (!cursor.isAfterLast)
-            cursor.close()
+        val list: MutableList<SongsModel> = ArrayList()
+        if (!cursor.moveToFirst()) {
             return list
-       // }
-        //return list
+        }
+        do {
+            val songsModel = SongsModel(
+                cursor.getInt(cursor.getColumnIndex("id")),
+                cursor.getString(cursor.getColumnIndex("name")),
+                cursor.getString(cursor.getColumnIndex("author")),
+                cursor.getString(cursor.getColumnIndex("link"))
+            )
+            list.add(songsModel)
+            cursor.moveToNext()
+        } while (!cursor.isAfterLast)
+        cursor.close()
+        return list
     }
 
     @SuppressLint("Range")
     fun getSongById(id : Int) : List<SongsModel> {
-        //val list = CoroutineScope(Dispatchers.IO).async {
         val cursor = db.query(TABLE_NAME, null, "id = $id", null, null, null, null)
 
         val list: MutableList<SongsModel> = ArrayList()
@@ -66,8 +62,6 @@ class SongsStorage(context: Context) {
         list.add(songsModel)
         cursor.close()
         return list
-        // }
-        //return list
     }
 
     fun addSong(songsModel: SongsModel) {
